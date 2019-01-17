@@ -23,10 +23,12 @@ void Start()
     }
 }
 
+public string scanText;
+
 void OnGUI()
 {
     // drawing the camera on screen
-    GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
+    //GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
     // do the reading — you might want to attempt to read less often than you draw on the screen for performance sake
     try
     {
@@ -40,6 +42,7 @@ void OnGUI()
         if (result != null)
         {
             Debug.Log("DECODED TEXT FROM QR: " +result.Text);
+            scanText = result.Text;
         }
     }
     catch (Exception ex) { Debug.LogWarning(ex.Message); }
