@@ -5,11 +5,13 @@ using UnityEngine;
 public class ShowImageOnScreen : MonoBehaviour {
 
 
-    public RenderTexture renderTex;
+    private RenderTexture renderTex;
+    public float screenResolutionMultiplier = 0.5f;
 
+    //For now is a plane with a material, but that will change
     public GameObject renderTarget;
 
-    public QRScanner scanner;
+    public Camera gameCam;
 
     public IEnumerator StartDownloadImage(GameObject renderTarget, string url)
     {
@@ -30,15 +32,33 @@ public class ShowImageOnScreen : MonoBehaviour {
         }
     }
 
+    private void Start()
+    {
+        //renderTex.height = Screen.height;
+        //renderTex.width = Screen.width;
+        renderTex = new RenderTexture((int)((float)Screen.width * screenResolutionMultiplier), (int)((float)Screen.height * screenResolutionMultiplier), 24);
+
+    }
+
     public void DownloadImageAndAddToRenderTarget(GameObject renderTarget, string url)
     {
         StartCoroutine(StartDownloadImage(renderTarget, url));
     }
-	
+
+    float updateTimer = 0;
 	// Update is called once per frame
 	void Update () {
-       // if (QRScanner.ScanTexture(QRScanner.GetRTPixels(renderTex)) != null)
-       //     DownloadImageAndAddToRenderTarget(renderTarget, scanner.scanText);
-       // Debug.Log("Framerate: " + 1 / Time.deltaTime);
+        updateTimer += Time.deltaTime;
+        if(updateTimer > 0.03)
+        {
+            updateTimer = 0;
+
+            //StartCoroutine(StartScanRoutine());
+            QRScanner.CameraRenderTextureSnapshot(gameCam, renderTex);
+            string QRText = QRScanner.ScanTexture(QRScanner.CameraRenderTextureSnapshot(gameCam, renderTex));
+            if (QRText != null)
+              DownloadImageAndAddToRenderTarget(renderTarget, QRText);
+            Debug.Log("Framerate: " + 1 / Time.deltaTime);
+        }
     }
 }
