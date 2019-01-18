@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShowImageOnScreen : MonoBehaviour {
 
 
+    public RenderTexture renderTex;
+
     public GameObject renderTarget;
 
     public QRScanner scanner;
@@ -35,8 +37,8 @@ public class ShowImageOnScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (scanner.scanText != null)
-            DownloadImageAndAddToRenderTarget(renderTarget, scanner.scanText);
-        Debug.Log("Framerate: " + 1 / Time.deltaTime);
+       // if (QRScanner.ScanTexture(QRScanner.GetRTPixels(renderTex)) != null)
+       //     DownloadImageAndAddToRenderTarget(renderTarget, scanner.scanText);
+       // Debug.Log("Framerate: " + 1 / Time.deltaTime);
     }
 }
