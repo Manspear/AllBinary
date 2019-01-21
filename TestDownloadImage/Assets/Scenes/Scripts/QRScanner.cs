@@ -60,11 +60,11 @@ public class QRScanner : MonoBehaviour {
             //asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], texTarget);
             //renderTarget.GetComponent<MeshRenderer>().material = asd;
 
-            Debug.Log("Trying" + "X: " + texTarget.width + " Y: " + texTarget.height);
+            //Debug.Log("Trying" + "X: " + texTarget.width + " Y: " + texTarget.height);
 
             if (result != null)
             {
-                Debug.Log("DECODED TEXT FROM QR: " + result.Text);
+                //Debug.Log("DECODED TEXT FROM QR: " + result.Text);
                 //scanText = result.Text;
                
                 return result.Text;

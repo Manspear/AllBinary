@@ -28,7 +28,7 @@ public class ShowImageOnScreen : MonoBehaviour {
             asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], www.texture);
             renderTarget.GetComponent<MeshRenderer>().material = asd;
             // GUI.Label(new Rect(0, 0, 100, 100), www.texture.ToString());
-            Debug.Log(www.texture);
+            //Debug.Log(www.texture);
         }
     }
 
@@ -58,7 +58,7 @@ public class ShowImageOnScreen : MonoBehaviour {
             string QRText = QRScanner.ScanTexture(QRScanner.CameraRenderTextureSnapshot(gameCam, renderTex));
             if (QRText != null)
               DownloadImageAndAddToRenderTarget(renderTarget, QRText);
-            Debug.Log("Framerate: " + 1 / Time.deltaTime);
+            //Debug.Log("Framerate: " + 1 / Time.deltaTime);
         }
     }
 }

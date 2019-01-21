@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class DownloadImage : ScriptableObject
 {
@@ -36,6 +36,10 @@ public class DownloadImage : ScriptableObject
             // assign texture
             // Renderer renderer = GetComponent<Renderer>();
             // renderer.material.mainTexture = www.texture;
+            Texture2D wwwTexture = www.texture;
+            Sprite daSprite = Sprite.Create(wwwTexture, new Rect(0, 0, wwwTexture.width, wwwTexture.height), new Vector2(0.5f, 0.5f));
+            Image targetImg = renderTarget.GetComponent<Image>();
+            targetImg.sprite = daSprite;
             Material asd = renderTarget.GetComponent<MeshRenderer>().material;
             asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], www.texture);
             renderTarget.GetComponent<MeshRenderer>().material = asd;
