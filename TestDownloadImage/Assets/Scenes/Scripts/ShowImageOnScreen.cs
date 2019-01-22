@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowImageOnScreen : MonoBehaviour {
 
@@ -24,9 +25,19 @@ public class ShowImageOnScreen : MonoBehaviour {
             // assign texture
             // Renderer renderer = GetComponent<Renderer>();
             // renderer.material.mainTexture = www.texture;
+            Image img = renderTarget.GetComponent<Image>();
+
+            if(img != null)
+                img.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0,0));
+
             Material asd = renderTarget.GetComponent<MeshRenderer>().material;
-            asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], www.texture);
-            renderTarget.GetComponent<MeshRenderer>().material = asd;
+            if(asd != null)
+            {
+                asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], www.texture);
+                renderTarget.GetComponent<MeshRenderer>().material = asd;
+            }
+
+            
             // GUI.Label(new Rect(0, 0, 100, 100), www.texture.ToString());
             //Debug.Log(www.texture);
         }
