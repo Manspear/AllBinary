@@ -13,6 +13,8 @@ public class ShowImageOnScreen : MonoBehaviour {
     public GameObject renderTarget;
 
     public Camera gameCam;
+    private bool foundQR = false;
+
 
     public IEnumerator StartDownloadImage(GameObject renderTarget, string url)
     {
@@ -26,13 +28,24 @@ public class ShowImageOnScreen : MonoBehaviour {
             // Renderer renderer = GetComponent<Renderer>();
             // renderer.material.mainTexture = www.texture;
             Image img = renderTarget.GetComponent<Image>();
+            img.preserveAspect = false;
             //Super test
             if(img != null)
+            {
+                
                 img.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0,0));
 
-            Material asd = renderTarget.GetComponent<MeshRenderer>().material;
-            if(asd != null)
+                float sizeKeeper = 100f / www.texture.width;
+                img.rectTransform.sizeDelta = new Vector2(www.texture.width * sizeKeeper, www.texture.height * sizeKeeper);
+
+
+
+                img.material = null;
+            }
+            MeshRenderer mr = renderTarget.GetComponent<MeshRenderer>();
+            if(mr != null)
             {
+                Material asd = mr.material;
                 asd.SetTexture(asd.GetTexturePropertyNameIDs()[0], www.texture);
                 renderTarget.GetComponent<MeshRenderer>().material = asd;
             }
@@ -59,7 +72,9 @@ public class ShowImageOnScreen : MonoBehaviour {
     float updateTimer = 0;
 	// Update is called once per frame
 	void Update () {
-        updateTimer += Time.deltaTime;
+        if(gameObject.GetComponent<MeshRenderer>().enabled && !foundQR)
+        {
+            updateTimer += Time.deltaTime;
         if(updateTimer > 0.03)
         {
             updateTimer = 0;
@@ -67,9 +82,15 @@ public class ShowImageOnScreen : MonoBehaviour {
             //StartCoroutine(StartScanRoutine());
             QRScanner.CameraRenderTextureSnapshot(gameCam, renderTex);
             string QRText = QRScanner.ScanTexture(QRScanner.CameraRenderTextureSnapshot(gameCam, renderTex));
+
             if (QRText != null)
-              DownloadImageAndAddToRenderTarget(renderTarget, QRText);
-            //Debug.Log("Framerate: " + 1 / Time.deltaTime);
-        }
+                {
+                    DownloadImageAndAddToRenderTarget(renderTarget, QRText);
+                    foundQR = true;
+                    Debug.Log("Scanned QR: " + QRText);
+                }
+                //Debug.Log("Framerate: " + 1 / Time.deltaTime);
+            }
+     }
     }
 }
