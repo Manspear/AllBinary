@@ -26,7 +26,7 @@ public class ShowImageOnScreen : MonoBehaviour {
             // Renderer renderer = GetComponent<Renderer>();
             // renderer.material.mainTexture = www.texture;
             Image img = renderTarget.GetComponent<Image>();
-
+            //Super test
             if(img != null)
                 img.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0,0));
 
